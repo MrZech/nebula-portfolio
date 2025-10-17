@@ -348,13 +348,17 @@ export default function App(){
           >
             <Card className="bg-gradient-to-br from-[#111318] to-[#1a1c2e] border-white/10 backdrop-blur-xl shadow-2xl shadow-purple-500/10">
               <CardContent className="p-6">
-                <h3 className="text-sm font-semibold text-purple-400 mb-4">Live Status</h3>
-                <div className="space-y-4">
-                  <StatusItem icon={<Activity className="w-4 h-4" />} label="System Uptime" value="89.2%" status="online" />
-                  <StatusItem icon={<Server className="w-4 h-4" />} label="Active Services" value="24" status="online" />
-                  <StatusItem icon={<HardDrive className="w-4 h-4" />} label="Storage Used" value="67%" status="warning" />
-                  <StatusItem icon={<Wifi className="w-4 h-4" />} label="Network Load" value="Low" status="online" />
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-sm font-semibold text-purple-400">Live Status</h3>
+                  <span className="text-xs px-2 py-1 bg-yellow-500/10 text-yellow-400 rounded-full border border-yellow-500/30">W.I.P.</span>
                 </div>
+                <div className="space-y-4 blur-sm select-none pointer-events-none opacity-50">
+                  <StatusItem icon={<Activity className="w-4 h-4" />} label="System Uptime" value="--%" status="online" />
+                  <StatusItem icon={<Server className="w-4 h-4" />} label="Active Services" value="--" status="online" />
+                  <StatusItem icon={<HardDrive className="w-4 h-4" />} label="Storage Used" value="--%" status="warning" />
+                  <StatusItem icon={<Wifi className="w-4 h-4" />} label="Network Load" value="---" status="online" />
+                </div>
+                <p className="text-xs text-center text-[#8d8f92] mt-4">Real-time metrics coming soon</p>
               </CardContent>
             </Card>
           </motion.div>
