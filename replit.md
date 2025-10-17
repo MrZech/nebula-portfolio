@@ -95,8 +95,9 @@ Comprehensive UI/UX overhaul with advanced animations and interactivity:
 **Navigation & Polish:**
 - Gradient scroll progress bar (purple to pink) at page top
 - Improved sticky header with glassmorphism backdrop-blur effect
-- Hamburger menu with dropdown for external links (replaces logo)
-- Click-outside-to-close functionality for menu dropdown
+- Stylish slide-out menu panel that animates from the left (YouTube-style)
+- Backdrop blur overlay when menu is open with click-to-close
+- Menu includes external links (Dispo.tech) and close button
 - Scroll-to-top FAB button that appears on scroll with smooth animations
 - Smooth scrolling interactions throughout
 
