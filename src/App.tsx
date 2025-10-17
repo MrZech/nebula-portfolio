@@ -605,7 +605,11 @@ export default function App(){
           {/* Contact Form */}
           <Card className="bg-gradient-to-br from-[#111318] to-[#0d0e12] border-white/10">
             <CardContent className="p-6">
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-sm font-semibold text-purple-400">Contact Form</h3>
+                <span className="text-xs px-2 py-1 bg-yellow-500/10 text-yellow-400 rounded-full border border-yellow-500/30">W.I.P.</span>
+              </div>
+              <form className="space-y-4 blur-sm select-none pointer-events-none opacity-50" onSubmit={(e) => e.preventDefault()}>
                 <div>
                   <label className="block text-sm font-medium text-[#c5c6c7] mb-2">Name</label>
                   <input 
@@ -640,6 +644,7 @@ export default function App(){
                   Send Message
                 </motion.button>
               </form>
+              <p className="text-xs text-center text-[#8d8f92] mt-4">Form functionality coming soon</p>
             </CardContent>
           </Card>
 
