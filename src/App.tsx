@@ -162,17 +162,6 @@ export default function App(){
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  React.useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (isMenuOpen && !target.closest('.menu-container')) {
-        setIsMenuOpen(false)
-      }
-    }
-    document.addEventListener("click", handleClickOutside)
-    return () => document.removeEventListener("click", handleClickOutside)
-  }, [isMenuOpen])
-
   const filteredProjects = selectedFilter === "All" 
     ? PROJECTS 
     : PROJECTS.filter(p => p.tags.includes(selectedFilter))
@@ -200,42 +189,14 @@ export default function App(){
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-black/40 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Hamburger Menu */}
-          <div className="relative menu-container">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg hover:bg-white/5 transition-colors text-white"
-              aria-label="Menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            
-            {/* Dropdown Menu */}
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 mt-2 w-48 bg-[#0d0e12] border border-purple-500/30 rounded-lg shadow-xl shadow-purple-500/10 overflow-hidden backdrop-blur-xl"
-              >
-                <a
-                  href="https://dispo.tech"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between px-4 py-3 text-sm text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white transition-colors"
-                >
-                  <span>Dispo.tech</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-                <button
-                  className="w-full flex items-center justify-between px-4 py-3 text-sm text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white transition-colors text-left"
-                >
-                  <span>Template Link</span>
-                  <ExternalLink className="w-4 h-4 opacity-30" />
-                </button>
-              </motion.div>
-            )}
-          </div>
+          {/* Hamburger Menu Button */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 rounded-lg hover:bg-white/5 transition-colors text-white z-50"
+            aria-label="Menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
           
           <nav className="flex items-center gap-2">
             <HeaderLink href="#projects">Projects</HeaderLink>
@@ -245,6 +206,64 @@ export default function App(){
           </nav>
         </div>
       </header>
+
+      {/* Backdrop Blur Overlay */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setIsMenuOpen(false)}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+        />
+      )}
+
+      {/* Slide-out Menu Panel */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ x: -300 }}
+          animate={{ x: 0 }}
+          exit={{ x: -300 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed top-0 left-0 h-full w-72 bg-[#0d0e12]/95 backdrop-blur-xl border-r border-purple-500/30 shadow-2xl shadow-purple-500/20 z-50"
+        >
+          <div className="p-6">
+            {/* Menu Header */}
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-xl font-bold text-white">Navigation</h2>
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-white/5 transition-colors text-white"
+                aria-label="Close menu"
+              >
+                <ChevronUp className="w-5 h-5 rotate-90" />
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="space-y-2">
+              <a
+                href="https://dispo.tech"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between px-4 py-3 text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white rounded-lg transition-all group"
+              >
+                <span className="font-medium">Dispo.tech</span>
+                <ExternalLink className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+              </a>
+              <button
+                className="w-full flex items-center justify-between px-4 py-3 text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white rounded-lg transition-all text-left group"
+              >
+                <span className="font-medium">Template Link</span>
+                <ExternalLink className="w-4 h-4 opacity-30 group-hover:opacity-50 transition-opacity" />
+              </button>
+            </div>
+
+            {/* Decorative gradient at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-purple-500/10 to-transparent pointer-events-none" />
+          </div>
+        </motion.div>
+      )}
 
       {/* Hero */}
       <section className="relative overflow-hidden py-20">
