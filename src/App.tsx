@@ -170,7 +170,7 @@ export default function App(){
   return (
     <div className="min-h-screen bg-[#0b0c10] text-[#c5c6c7] relative">
       {/* Animated Grid Background */}
-      <div className="fixed inset-0 opacity-20 pointer-events-none">
+      <div className="fixed inset-0 opacity-20 pointer-events-none -z-10">
         <div className="absolute inset-0" style={{
           backgroundImage: `linear-gradient(#1a1c2e 1px, transparent 1px), linear-gradient(90deg, #1a1c2e 1px, transparent 1px)`,
           backgroundSize: '50px 50px'
