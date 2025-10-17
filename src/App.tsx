@@ -161,13 +161,16 @@ export default function App(){
             <p className="mt-2 text-lg text-purple-300">{PROFILE.title}</p>
             <p className="mt-4 max-w-2xl text-sm sm:text-base text-[#a2a4a6]">{PROFILE.summary}</p>
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              {/* shadcn pattern: Button asChild wraps an anchor */}
               {PROFILE.RESUME_URL && (
-                <Button asChild size="md">
-  <a href={PROFILE.RESUME_URL} target="_blank" rel="noreferrer">
-    Download Résumé
-  </a>
-</Button>
+                <a 
+                  href={PROFILE.RESUME_URL} 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl transition border text-sm font-medium leading-6 bg-purple-600/90 text-white border-white/10 hover:bg-purple-500/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/60"
+                >
+                  <Download className="w-4 h-4" />
+                  Download Résumé
+                </a>
               )}
 
               {PROFILE.links.github && (
