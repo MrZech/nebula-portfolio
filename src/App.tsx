@@ -24,6 +24,8 @@ import {
   Wifi,
   Zap,
   Send,
+  Menu,
+  ExternalLink,
 } from "lucide-react"
 
 // ---------- Types ----------
@@ -149,6 +151,7 @@ const EXPERIENCE: Experience[] = [
 export default function App(){
   const [selectedFilter, setSelectedFilter] = React.useState<string>("All")
   const [showScrollTop, setShowScrollTop] = React.useState(false)
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const { scrollYProgress } = useScroll()
   
   React.useEffect(() => {
@@ -158,6 +161,17 @@ export default function App(){
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  React.useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (isMenuOpen && !target.closest('.menu-container')) {
+        setIsMenuOpen(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside)
+    return () => document.removeEventListener("click", handleClickOutside)
+  }, [isMenuOpen])
 
   const filteredProjects = selectedFilter === "All" 
     ? PROJECTS 
@@ -186,13 +200,43 @@ export default function App(){
       {/* Header */}
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-black/40 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div
-              className="w-10 h-10 bg-center bg-cover rounded-lg ring-2 ring-purple-500/50"
-              style={{ backgroundImage: "url('/logo.png')" }}
-            />
-            <span className="tracking-wide font-semibold text-white">Nebula</span>
+          {/* Hamburger Menu */}
+          <div className="relative menu-container">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-lg hover:bg-white/5 transition-colors text-white"
+              aria-label="Menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            
+            {/* Dropdown Menu */}
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-full left-0 mt-2 w-48 bg-[#0d0e12] border border-purple-500/30 rounded-lg shadow-xl shadow-purple-500/10 overflow-hidden backdrop-blur-xl"
+              >
+                <a
+                  href="https://dispo.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between px-4 py-3 text-sm text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white transition-colors"
+                >
+                  <span>Dispo.tech</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+                <button
+                  className="w-full flex items-center justify-between px-4 py-3 text-sm text-[#c5c6c7] hover:bg-purple-500/10 hover:text-white transition-colors text-left"
+                >
+                  <span>Template Link</span>
+                  <ExternalLink className="w-4 h-4 opacity-30" />
+                </button>
+              </motion.div>
+            )}
           </div>
+          
           <nav className="flex items-center gap-2">
             <HeaderLink href="#projects">Projects</HeaderLink>
             <HeaderLink href="#skills">Skills</HeaderLink>
